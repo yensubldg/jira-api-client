@@ -30,12 +30,9 @@ export class BaseApiClient {
     
     const instance = axios.create({
       baseURL: `${baseUrl}/rest/api/${apiVersion}`,
-      timeout,
-      auth: {
-        username: email,
-        password: apiToken,
-      },
+      timeout,      
       headers: {
+        'Authorization': `Basic ${Buffer.from(`${email}:${apiToken}`).toString('base64')}`,
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
