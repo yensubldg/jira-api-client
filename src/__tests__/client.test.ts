@@ -9,8 +9,7 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 describe('JiraClient', () => {
   const mockConfig: JiraClientConfig = {
     baseUrl: 'https://example.atlassian.net',
-    email: 'test@example.com',
-    apiToken: 'test-token',
+    token: 'test-token',
   };
 
   beforeEach(() => {
@@ -36,10 +35,11 @@ describe('JiraClient', () => {
     expect(mockedAxios.create).toHaveBeenCalledTimes(3);
     expect(mockedAxios.create).toHaveBeenCalledWith(expect.objectContaining({
       baseURL: 'https://example.atlassian.net/rest/api/3',
-      auth: {
-        username: 'test@example.com',
-        password: 'test-token',
-      },
+      headers: expect.objectContaining({
+        'Authorization': 'Bearer test-token',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }),
     }));
   });
 

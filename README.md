@@ -7,7 +7,7 @@ A TypeScript client for interacting with the Jira API. This package provides a s
 
 ## Features
 
-- 🔒 **Authentication** - Secure API token authentication
+- 🔒 **Authentication** - Secure Bearer token authentication
 - 📝 **Issue Management** - Create, read, update, and delete Jira issues
 - 🔄 **Transitions** - Move issues through workflows
 - 💬 **Comments** - Manage issue comments
@@ -33,8 +33,7 @@ Create a `.env` file in your project root:
 
 ```
 JIRA_BASE_URL=https://your-domain.atlassian.net
-JIRA_EMAIL=your-email@example.com
-JIRA_API_TOKEN=your-api-token
+JIRA_TOKEN=your-bearer-token
 JIRA_API_VERSION=3
 JIRA_REQUEST_TIMEOUT=30000
 ```
@@ -54,8 +53,7 @@ import { JiraClient } from 'jira-api-client';
 
 const jira = new JiraClient({
   baseUrl: 'https://your-domain.atlassian.net',
-  email: 'your-email@example.com',
-  apiToken: 'your-api-token',
+  token: 'your-bearer-token',
   apiVersion: 3, // optional, defaults to 3
   timeout: 30000, // optional, defaults to 30000 (30 seconds)
 });

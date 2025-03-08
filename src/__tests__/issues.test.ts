@@ -9,8 +9,7 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 describe('IssuesApiClient', () => {
   const mockConfig: JiraClientConfig = {
     baseUrl: 'https://example.atlassian.net',
-    email: 'test@example.com',
-    apiToken: 'test-token',
+    token: 'test-token',
   };
 
   let issuesClient: IssuesApiClient;

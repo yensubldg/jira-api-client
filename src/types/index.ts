@@ -4,10 +4,8 @@
 export interface JiraClientConfig {
   /** Base URL of the Jira instance (e.g., https://your-domain.atlassian.net) */
   baseUrl: string;
-  /** Email address associated with the Jira account */
-  email: string;
-  /** API token for authentication */
-  apiToken: string;
+  /** Bearer token for authentication */
+  token: string;
   /** API version to use (default: 3) */
   apiVersion?: number;
   /** Request timeout in milliseconds (default: 30000) */

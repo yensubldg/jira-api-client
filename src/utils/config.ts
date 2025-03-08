@@ -19,8 +19,7 @@ export const DEFAULT_CONFIG: Partial<JiraClientConfig> = {
  */
 export function createConfigFromEnv(): JiraClientConfig {
   const baseUrl = process.env.JIRA_BASE_URL;
-  const email = process.env.JIRA_EMAIL;
-  const apiToken = process.env.JIRA_API_TOKEN;
+  const token = process.env.JIRA_TOKEN;
   const apiVersion = process.env.JIRA_API_VERSION 
     ? parseInt(process.env.JIRA_API_VERSION, 10) 
     : DEFAULT_CONFIG.apiVersion;
@@ -32,18 +31,13 @@ export function createConfigFromEnv(): JiraClientConfig {
     throw new Error('JIRA_BASE_URL environment variable is required');
   }
 
-  if (!email) {
-    throw new Error('JIRA_EMAIL environment variable is required');
-  }
-
-  if (!apiToken) {
-    throw new Error('JIRA_API_TOKEN environment variable is required');
+  if (!token) {
+    throw new Error('JIRA_TOKEN environment variable is required');
   }
 
   return {
     baseUrl,
-    email,
-    apiToken,
+    token,
     apiVersion,
     timeout,
   };
@@ -57,8 +51,7 @@ export function createConfigFromEnv(): JiraClientConfig {
 export function createConfig(config: JiraClientConfig): Required<JiraClientConfig> {
   return {
     baseUrl: config.baseUrl,
-    email: config.email,
-    apiToken: config.apiToken,
+    token: config.token,
     apiVersion: config.apiVersion ?? DEFAULT_CONFIG.apiVersion!,
     timeout: config.timeout ?? DEFAULT_CONFIG.timeout!,
   };
