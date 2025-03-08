@@ -1,0 +1,55 @@
+{
+  "name": "jira-api-client",
+  "version": "1.0.0",
+  "description": "A TypeScript client for interacting with the Jira API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "start": "node dist/index.js",
+    "example": "ts-node examples/basic-usage.ts"
+  },
+  "keywords": [
+    "jira",
+    "api",
+    "client",
+    "atlassian",
+    "typescript",
+    "issues",
+    "project"
+  ],
+  "author": "yensubldg1 <thang11a5tp@gmail.com>",
+  "license": "MIT",
+  "type": "commonjs",
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yensubldg/jira-api-client.git"
+  },
+  "homepage": "https://github.com/yensubldg/jira-api-client#readme",
+  "bugs": {
+    "url": "https://github.com/yensubldg/jira-api-client/issues"
+  },
+  "dependencies": {
+    "@types/node": "^22.13.10",
+    "axios": "^1.8.2",
+    "dotenv": "^16.4.7",
+    "typescript": "^5.8.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@typescript-eslint/eslint-plugin": "^8.26.0",
+    "@typescript-eslint/parser": "^8.26.0",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.6",
+    "ts-node": "^10.9.2",
+    "typescript-eslint": "^8.26.0"
+  }
+}
