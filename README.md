@@ -7,7 +7,7 @@ A TypeScript client for interacting with the Jira API. This package provides a s
 
 ## Features
 
-- 🔒 **Authentication** - Secure Bearer token authentication
+- 🔒 **Authentication** - Support for both Bearer token and Basic authentication
 - 📝 **Issue Management** - Create, read, update, and delete Jira issues
 - 🔄 **Transitions** - Move issues through workflows
 - 💬 **Comments** - Manage issue comments
@@ -23,6 +23,26 @@ A TypeScript client for interacting with the Jira API. This package provides a s
 npm install jira-api-client
 ```
 
+## Authentication
+
+This client supports two authentication methods for Jira:
+
+### Bearer Token Authentication (Recommended)
+
+Bearer token authentication is the recommended approach for security reasons. It uses a personal access token that you can generate from your Atlassian account.
+
+To generate a token:
+1. Log in to https://id.atlassian.com/manage-profile/security/api-tokens
+2. Click "Create API token"
+3. Give your token a name and click "Create"
+4. Copy the token value (you won't be able to see it again)
+
+### Basic Authentication
+
+Basic authentication uses your email and API token (as password). This method is supported for backward compatibility but is less secure than Bearer token authentication.
+
+**Note:** Never use your actual Atlassian account password. Always use an API token as the password.
+
 ## Configuration
 
 You can configure the client using environment variables or by passing a configuration object directly.
@@ -32,8 +52,14 @@ You can configure the client using environment variables or by passing a configu
 Create a `.env` file in your project root:
 
 ```
+# Required
 JIRA_BASE_URL=https://your-domain.atlassian.net
 JIRA_TOKEN=your-bearer-token
+
+# For Basic authentication (optional)
+# JIRA_EMAIL=your-email@example.com
+
+# Optional Configuration
 JIRA_API_VERSION=3
 JIRA_REQUEST_TIMEOUT=30000
 ```
@@ -51,13 +77,37 @@ const jira = JiraClient.fromEnv();
 ```typescript
 import { JiraClient } from 'jira-api-client';
 
+// Bearer token authentication (recommended)
 const jira = new JiraClient({
   baseUrl: 'https://your-domain.atlassian.net',
   token: 'your-bearer-token',
   apiVersion: 3, // optional, defaults to 3
   timeout: 30000, // optional, defaults to 30000 (30 seconds)
 });
+
+// OR Basic authentication with email/password
+const jiraBasic = new JiraClient({
+  baseUrl: 'https://your-domain.atlassian.net',
+  email: 'your-email@example.com',
+  token: 'your-api-token', // In this case, token is used as password
+  apiVersion: 3, // optional, defaults to 3
+  timeout: 30000, // optional, defaults to 30000 (30 seconds)
+});
 ```
+
+The client automatically detects which authentication method to use based on whether you provide an email:
+- If `email` is provided, Basic authentication is used
+- If only `token` is provided, Bearer token authentication is used
+
+### Security Considerations
+
+1. **Token Storage**: Never hardcode your authentication tokens in your source code. Use environment variables or a secure secrets management system.
+
+2. **Token Permissions**: When creating API tokens, follow the principle of least privilege. Only grant the permissions that are necessary for your application to function.
+
+3. **Token Rotation**: Regularly rotate your API tokens, especially in production environments.
+
+4. **HTTPS**: Always use HTTPS when communicating with the Jira API to ensure your authentication credentials are encrypted during transmission.
 
 ## Usage Examples
 
@@ -278,6 +328,10 @@ class UsersApiClient {
   getAssignableUsers(projectIdOrKey: string, pagination?: PaginationParams): Promise<PaginatedResponse<JiraUser>>;
 }
 ```
+
+## Changelog
+
+See the [CHANGELOG.md](CHANGELOG.md) file for details on all changes and releases.
 
 ## Contributing
 

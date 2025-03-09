@@ -26,13 +26,21 @@ export class BaseApiClient {
    * @returns The Axios instance
    */
   private createAxiosInstance(): AxiosInstance {
-    const { baseUrl, token, apiVersion, timeout } = this.config;
+    const { baseUrl, token, apiVersion, timeout, email } = this.config;
+
+    let auth = '';
+
+    if (email) {
+      auth = 'Basic ' + Buffer.from(`${email}:${token}`).toString('base64');
+    } else {
+      auth = `Bearer ${token}`;
+    }
     
     const instance = axios.create({
       baseURL: `${baseUrl}/rest/api/${apiVersion}`,
       timeout,      
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': auth,
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },

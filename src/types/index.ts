@@ -4,6 +4,8 @@
 export interface JiraClientConfig {
   /** Base URL of the Jira instance (e.g., https://your-domain.atlassian.net) */
   baseUrl: string;
+  /** Jira username */
+  email?: string;
   /** Bearer token for authentication */
   token: string;
   /** API version to use (default: 3) */

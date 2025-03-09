@@ -68,4 +68,22 @@ describe('JiraClient', () => {
       timeout: 60000,
     }));
   });
+
+  it('should create a client with email/password authentication', () => {
+    const emailConfig: JiraClientConfig = {
+      baseUrl: 'https://example.atlassian.net',
+      email: 'test@example.com',
+      token: 'test-token',
+    };
+    
+    const _client = new JiraClient(emailConfig);
+    
+    expect(mockedAxios.create).toHaveBeenCalledWith(expect.objectContaining({
+      headers: expect.objectContaining({
+        'Authorization': 'Basic ' + Buffer.from('test@example.com:test-token').toString('base64'),
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }),
+    }));
+  });
 }); 
